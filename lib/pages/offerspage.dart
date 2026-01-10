@@ -5,7 +5,37 @@ class OffersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    var screenSize = MediaQuery.of(context).size;
+    return screenSize.width < 600 ? ListView (
+      children: const [
+        Offers(
+          title: 'Special Discount',
+          description: 'Get 20% off on all items this weekend!',
+        ),
+        Offers(
+          title: 'Buy One Get One Free',
+          description: 'Exclusive offer on selected products.',
+        ),
+        Offers(
+          title: 'Free Shipping',
+          description: 'Enjoy free shipping on orders over \$50.',
+        ),
+        Offers(
+          title: 'Special Discount',
+          description: 'Get 20% off on all items this weekend!',
+        ),
+        Offers(
+          title: 'Buy One Get One Free',
+          description: 'Exclusive offer on selected products.',
+        ),
+        Offers(
+          title: 'Free Shipping',
+          description: 'Enjoy free shipping on orders over \$50.',
+        ),
+      ],
+    ): GridView.count(
+      crossAxisCount: screenSize.width > 1200 ? 3 : 2,
+      childAspectRatio: 2,
       children: const [
         Offers(
           title: 'Special Discount',
@@ -45,6 +75,7 @@ class Offers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return SizedBox(
       height: 199,
       child: Card(
@@ -69,7 +100,7 @@ class Offers extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         title,
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style:screenSize.width > 600 ? Theme.of(context).textTheme.titleSmall : Theme.of(context).textTheme.headlineSmall,
                       ),
                     ),
                   ),
@@ -82,7 +113,7 @@ class Offers extends StatelessWidget {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     description,
-                    style: Theme.of(context).textTheme.headlineSmall,
+                    style: TextStyle(fontSize: screenSize.width > 600 ? 18 : 14),
                     textAlign: TextAlign.center,
                   ),
                 ),

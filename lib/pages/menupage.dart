@@ -9,6 +9,7 @@ class Menupage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     return FutureBuilder(
       future: datamanager.getMenu(),
       builder: (context, snapshot) {
@@ -29,19 +30,37 @@ class Menupage extends StatelessWidget {
                       ),
                     ),
                   ),
-                  ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: categories[index].products.length,
-                    itemBuilder: (context, productIndex) {
-                      return ProductItem(
-                        product: categories[index].products[productIndex],
-                        onAdd: (addProduct) {
-                          datamanager.cardAdd(addProduct);
-                        },
-                      );
-                    },
-                  ),
+                  screenSize.width < 600
+                      ? ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: categories[index].products.length,
+                          itemBuilder: (context, productIndex) {
+                            return ProductItem(
+                              product: categories[index].products[productIndex],
+                              onAdd: (addProduct) {
+                                datamanager.cardAdd(addProduct);
+                              },
+                            );
+                          },
+                        )
+                      : GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: screenSize.width > 1200 ? 3 : 2,
+                            childAspectRatio: 1.5,
+                          ),
+                          itemCount: categories[index].products.length,
+                          itemBuilder: (context, productIndex) {
+                            return ProductItem(
+                              product: categories[index].products[productIndex],
+                              onAdd: (addProduct) {
+                                datamanager.cardAdd(addProduct);
+                              },
+                            );
+                          },
+                        ),
                 ],
               );
             },

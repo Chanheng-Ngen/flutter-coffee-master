@@ -14,6 +14,7 @@ class OrdersPage extends StatefulWidget {
 class _OrdersPageState extends State<OrdersPage> {
   @override
   Widget build(BuildContext context) {
+    var screenSize = MediaQuery.of(context).size;
     if (widget.datamanager.cart.isEmpty) {
       return const Center(
         child: Text(
@@ -25,7 +26,24 @@ class _OrdersPageState extends State<OrdersPage> {
       return Column(
         children: [
           Expanded(
-            child: ListView.builder(
+            child: screenSize.width < 600 ? ListView.builder(
+              itemCount: widget.datamanager.cart.length,
+              itemBuilder: (context, index) {
+                var item = widget.datamanager.cart[index];
+                return OrderItem(
+                  item: item,
+                  onRemove: (product) {
+                    setState(() {
+                      widget.datamanager.cardDelete(product);
+                    });
+                  },
+                );
+              },
+            ) : GridView.builder(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: screenSize.width > 1200 ? 3 : 2,
+                childAspectRatio: 4,
+              ),
               itemCount: widget.datamanager.cart.length,
               itemBuilder: (context, index) {
                 var item = widget.datamanager.cart[index];

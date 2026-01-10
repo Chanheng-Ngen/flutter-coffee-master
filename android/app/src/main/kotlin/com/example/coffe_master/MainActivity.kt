@@ -1,4 +1,4 @@
-package com.example.coffe_master
+package com.smuek.mastercoffee
 
 import io.flutter.embedding.android.FlutterActivity
 
